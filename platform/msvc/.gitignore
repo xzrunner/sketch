@@ -1,0 +1,5 @@
+sketch/
+projects/*
+
+!projects/sketch.vcxproj
+!projects/sketch.vcxproj.filters
