@@ -2,13 +2,13 @@
 
 #include "sketch/ConstriantsType.h"
 
-#include <drawing2/CommonEditView.h>
+#include <draft2/CommonEditView.h>
 #include <constraints2/Scene.h>
 
 namespace sketch
 {
 
-class ConsEditView : public dw2::CommonEditView
+class ConsEditView : public draft2::CommonEditView
 {
 public:
     ConsEditView(const ee0::SceneNodeContainer& nodes,

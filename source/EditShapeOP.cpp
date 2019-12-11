@@ -10,8 +10,8 @@ namespace sketch
 {
 
 EditShapeOP::EditShapeOP(ee0::WxStagePage& stage, const std::shared_ptr<pt0::Camera>& cam,
-                         dw2::EditView& view, float capture_threshold, uint32_t shape_type)
-    : dw2::EditShapeOP(cam, view, capture_threshold, shape_type)
+                         draft2::EditView& view, float capture_threshold, uint32_t shape_type)
+    : draft2::EditShapeOP(cam, view, capture_threshold, shape_type)
     , m_stage(stage)
 {
     m_right_down_pos.MakeInvalid();
@@ -19,7 +19,7 @@ EditShapeOP::EditShapeOP(ee0::WxStagePage& stage, const std::shared_ptr<pt0::Cam
 
 bool EditShapeOP::OnMouseLeftUp(int x, int y)
 {
-    if (dw2::EditShapeOP::OnMouseLeftUp(x, y)) {
+    if (draft2::EditShapeOP::OnMouseLeftUp(x, y)) {
         return true;
     }
 
@@ -30,7 +30,7 @@ bool EditShapeOP::OnMouseLeftUp(int x, int y)
 
 bool EditShapeOP::OnMouseRightDown(int x, int y)
 {
-	if (dw2::EditShapeOP::OnMouseRightDown(x, y)) {
+	if (draft2::EditShapeOP::OnMouseRightDown(x, y)) {
 		return true;
 	}
 
@@ -41,7 +41,7 @@ bool EditShapeOP::OnMouseRightDown(int x, int y)
 
 bool EditShapeOP::OnMouseRightUp(int x, int y)
 {
-    if (dw2::EditShapeOP::OnMouseRightUp(x, y)) {
+    if (draft2::EditShapeOP::OnMouseRightUp(x, y)) {
         return true;
     }
 
@@ -67,7 +67,7 @@ bool EditShapeOP::OnMouseRightUp(int x, int y)
 
 bool EditShapeOP::OnPopMenuSelected(int type)
 {
-    if (dw2::EditShapeOP::OnPopMenuSelected(type)) {
+    if (draft2::EditShapeOP::OnPopMenuSelected(type)) {
         return true;
     }
 

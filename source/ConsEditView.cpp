@@ -11,13 +11,13 @@ namespace sketch
 
 ConsEditView::ConsEditView(const ee0::SceneNodeContainer& nodes,
                            const ee0::SubjectMgrPtr& sub_mgr)
-    : dw2::CommonEditView(nodes, sub_mgr)
+    : draft2::CommonEditView(nodes, sub_mgr)
 {
 }
 
 void ConsEditView::Insert(const std::shared_ptr<gs::Shape2D>& shape)
 {
-    dw2::CommonEditView::Insert(shape);
+    draft2::CommonEditView::Insert(shape);
 
     auto type = shape->get_type();
     size_t id = 0;
@@ -37,7 +37,7 @@ void ConsEditView::Insert(const std::shared_ptr<gs::Shape2D>& shape)
 
 void ConsEditView::Clear()
 {
-    dw2::CommonEditView::Clear();
+    draft2::CommonEditView::Clear();
 
     m_layout.Clear();
     m_shape2geo.clear();
