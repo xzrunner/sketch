@@ -3,6 +3,9 @@
 #include <geoshape/Point2D.h>
 #include <geoshape/Line2D.h>
 
+#include <thread>
+#include <iostream>
+
 namespace sketch
 {
 
@@ -40,13 +43,6 @@ void ConsEditView::Clear()
     m_shape2geo.clear();
 }
 
-void ConsEditView::ShapeChanged(const std::shared_ptr<gs::Shape2D>& shape)
-{
-    dw2::CommonEditView::ShapeChanged(shape);
-
-    m_layout.Solve();
-}
-
 void ConsEditView::AddDistanceConstraint(const std::shared_ptr<gs::Line2D>& line, float distance)
 {
     auto itr = m_shape2geo.find(line);
@@ -54,18 +50,71 @@ void ConsEditView::AddDistanceConstraint(const std::shared_ptr<gs::Line2D>& line
 
     auto geo = itr->second;
     for (auto& c : geo->cons) {
-        if (c.type == ConstriantsType::Distance) {
-            c.val = distance;
+        if (c->type == ConstriantsType::Distance) {
+            c->val = distance;
             return;
         }
     }
 
-    Constraint cons;
-    cons.type = ConstriantsType::Distance;
-    cons.val = distance;
-    cons.id = m_layout.AddDistanceConstraint(geo->id, &cons.val);
+    auto cons = std::make_shared<Constraint>();
+    cons->type = ConstriantsType::Distance;
+    cons->val = distance;
+    cons->id = m_layout.AddDistanceConstraint(geo->id, &cons->val);
+
+    m_layout.Solve();
 
     geo->cons.push_back(cons);
+}
+
+void ConsEditView::AddVerticalConstraint(const std::shared_ptr<gs::Line2D>& line)
+{
+    auto itr = m_shape2geo.find(line);
+    assert(itr != m_shape2geo.end());
+
+    auto geo = itr->second;
+    for (auto& c : geo->cons) {
+        if (c->type == ConstriantsType::Vertical) {
+            return;
+        }
+    }
+
+    auto cons = std::make_shared<Constraint>();
+    cons->type = ConstriantsType::Vertical;
+    cons->id = m_layout.AddVerticalConstraint(geo->id);
+
+    m_layout.Solve();
+
+    geo->cons.push_back(cons);
+}
+
+void ConsEditView::AddHorizontalConstraint(const std::shared_ptr<gs::Line2D>& line)
+{
+    auto itr = m_shape2geo.find(line);
+    assert(itr != m_shape2geo.end());
+
+    auto geo = itr->second;
+    for (auto& c : geo->cons) {
+        if (c->type == ConstriantsType::Horizontal) {
+            return;
+        }
+    }
+
+    auto cons = std::make_shared<Constraint>();
+    cons->type = ConstriantsType::Horizontal;
+    cons->id = m_layout.AddHorizontalConstraint(geo->id);
+
+    m_layout.Solve();
+
+    geo->cons.push_back(cons);
+}
+
+void ConsEditView::ClearConstraints()
+{
+    m_layout.ClearConstraints();
+
+    for (auto itr : m_shape2geo) {
+        itr.second->cons.clear();
+    }
 }
 
 }

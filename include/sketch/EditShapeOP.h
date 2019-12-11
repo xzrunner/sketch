@@ -13,6 +13,7 @@ public:
     EditShapeOP(ee0::WxStagePage& stage, const std::shared_ptr<pt0::Camera>& cam,
         dw2::EditView& view, float capture_threshold, uint32_t shape_type);
 
+    virtual bool OnMouseLeftUp(int x, int y) override;
     virtual bool OnMouseRightDown(int x, int y) override;
     virtual bool OnMouseRightUp(int x, int y) override;
 

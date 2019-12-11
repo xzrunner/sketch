@@ -1,4 +1,5 @@
 #include "sketch/EditShapeOP.h"
+#include "sketch/ConsEditView.h"
 
 #include <ee0/WxStagePage.h>
 #include <ee0/RightPopupMenu.h>
@@ -14,6 +15,17 @@ EditShapeOP::EditShapeOP(ee0::WxStagePage& stage, const std::shared_ptr<pt0::Cam
     , m_stage(stage)
 {
     m_right_down_pos.MakeInvalid();
+}
+
+bool EditShapeOP::OnMouseLeftUp(int x, int y)
+{
+    if (dw2::EditShapeOP::OnMouseLeftUp(x, y)) {
+        return true;
+    }
+
+    static_cast<ConsEditView&>(m_view).Solve();
+
+    return false;
 }
 
 bool EditShapeOP::OnMouseRightDown(int x, int y)
